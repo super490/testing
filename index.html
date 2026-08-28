@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUREUS | El nuevo estándar en remesas globales</title>
+  
+  <!-- Fuente Google: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* VARIABLES & RESET */
+    :root {
+      --bg-color: #000000;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f5f5f7;
+      --text-muted: #86868b;
+      --accent-gold: #e2c08d;
+      --accent-glow: rgba(226, 192, 141, 0.15);
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-family);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* NAVEGACIÓN STICKY CON GLASSMORPHISM */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 0.85rem;
+      transition: color 0.4s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* BOTONES LUXURY */
+    .btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--text-main);
+      color: var(--bg-color);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 140px 20px 80px;
+      position: relative;
+    }
+
+    /* EFECTO LUZ DE FONDO (GLOW) */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .tagline {
+      color: var(--accent-gold);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 600;
+      letter-spacing: -1px;
+      max-width: 900px;
+      line-height: 1.1;
+      margin-bottom: 25px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      z-index: 1;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      max-width: 600px;
+      margin-bottom: 40px;
+      font-weight: 300;
+      z-index: 1;
+    }
+
+    /* TARJETA INTERACTIVA DE SIMULACIÓN DE ENVÍO */
+    .transfer-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 30px;
+      width: 100%;
+      max-width: 440px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+      z-index: 1;
+      transition: border-color 0.4s ease;
+    }
+
+    .transfer-card:hover {
+      border-color: rgba(226, 192, 141, 0.3);
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+
+    .input-group label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: block;
+      text-align: left;
+    }
+
+    .input-group input {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.2rem;
+      width: 100%;
+      outline: none;
+      font-weight: 500;
+    }
+
+    .currency {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-left: 10px;
+    }
+
+    .rate-info {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: 15px 0 25px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .rate-info span {
+      color: var(--accent-gold);
+    }
+
+    /* SECCIÓN DE CARACTERÍSTICAS (BENEFICIOS) */
+    .features {
+      padding: 100px 8%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 40px;
+      border-radius: 20px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--accent-gold);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 40px 8%;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    /* ANIMACIONES SUAVES DE ENTRADA */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <nav>
+    <div class="logo">AUREUS</div>
+    <div class="nav-links">
+      <a href="#experiencia">Experiencia</a>
+      <a href="#seguridad">Seguridad</a>
+      <a href="#tasas">Cobertura</a>
+    </div>
+    <a href="#comenzar" class="btn btn-primary">Acceso Privado</a>
+  </nav>
+
+  <!-- SECCIÓN HERO / PRINCIPAL -->
+  <section class="hero fade-in">
+    <div class="tagline">El Arte de Transferir Valor</div>
+    <h1>Remesas sin fronteras.<br>Sin comisiones ocultas.</h1>
+    <p>Mueve tu capital alrededor del mundo al instante. La elegancia de la banca privada con la velocidad de la última tecnología.</p>
+
+    <!-- CALCULADORA / TARJETA MINIMALISTA -->
+    <div class="transfer-card">
+      <div class="input-group">
+        <div>
+          <label>Tú envías</label>
+          <input type="text" value="2,500">
+        </div>
+        <span class="currency">USD</span>
+      </div>
+
+      <div class="input-group">
+        <div>
+          <label>El destinatario recibe</label>
+          <input type="text" value="2,285.50" readonly>
+        </div>
+        <span class="currency">EUR</span>
+      </div>
+
+      <div class="rate-info">
+        <span>Garantía de tipo de cambio real</span>
+        <span>Comisión: $0.00</span>
+      </div>
+
+      <a href="#" class="btn btn-primary" style="width: 100%;">Transferir Ahora</a>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE CARACTERÍSTICAS -->
+  <section class="features" id="experiencia">
+    <div class="features-grid">
+      
+      <div class="feature-card">
+        <div class="feature-icon">✦</div>
+        <h3>Velocidad Instantánea</h3>
+        <p>Aprovechamos la tecnología distribuida para que tus transferencias lleguen en cuestión de segundos, sin importar el destino.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">◈</div>
+        <h3>Encriptación Grado Militar</h3>
+        <p>Tu privacidad y la integridad de tu capital son lo primero. Protección punto a punto respaldada por estándares bancarios globales.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✧</div>
+        <h3>Transparencia Absoluta</h3>
+        <p>Sin tarifas ocultas ni márgenes de cambio inflados. Lo que ves en pantalla es exactamente lo que recibe tu destinatario.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 AUREUS Financial Technologies Inc. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
