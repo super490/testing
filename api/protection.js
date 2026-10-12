@@ -1,4 +1,18 @@
 // api/protection.js
+
+// Detectar específicamente curl_cffi
+// curl_cffi deja huellas en los headers TLS/HTTP2
+const hasCurlSignature = 
+  // curl_cffi a veces no envía todos los headers de un browser real
+  (!request.headers.get('sec-ch-ua') && userAgent.includes('Mozilla')) ||
+  // Orden de headers sospechoso
+  (acceptEncoding.includes('br') && !acceptEncoding.includes('gzip'));
+
+if (hasCurlSignature) {
+  console.warn('🚫 curl_cffi DETECTADO');
+  return new Response('Blocked', { status: 403 });
+}
+
 export const config = {
   runtime: 'edge',
 };
