@@ -1,28 +1,27 @@
 {
   "version": 2,
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/(.+)",
-      "destination": "/api/protection"
-    },
-    {
-      "source": "/",
-      "destination": "/api/protection"
-    }
-  ],
   "headers": [
     {
-      "source": "/api/(.*)",
+      "source": "/(.*)\\.(env|git|sql|bak|log|txt|json|config|settings|backup|password|dump)",
       "headers": [
         {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ],
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "(?i)(curl|python|bot|spider|scan)"
         }
       ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)\\.(env|git|sql|bak|log|txt|json|config|settings|backup|password|dump)",
+      "destination": "/404.html"
     }
   ]
 }
